@@ -48,6 +48,7 @@
     
   </style>
   <body class="mixpanel-platform-body">
+    <h1 class="title"></h1>
     <div class="survey"></div>
     <script>
       var token = 'b00f0e2673d6985d403d4eaa3fea973b';
@@ -62,15 +63,17 @@
               resp_obj.surveys.length > 0 &&
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
-              for(var i = 0; i < resp_obj.surveys[0].questions.length; i++) {
-                var question = resp_obj.surveys[0].questions[i];
-                var $q = $("<div class='question' />").text(question.prompt).appendTo($(".survey"));
-                var choices = question.extra_data.$choices;
-                var $a = $("<div class='answers' />").appendTo($(".survey"));
-                for(var c = 0; c < choices.length; c++) {
-                  var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a).click(answerSelected);
+                var survey = resp_obj.surveys[0];
+                console.log(survey);
+                for(var i = 0; i < survey.questions.length; i++) {
+                  var question = survey.questions[i];
+                  var $q = $("<div class='question' />").text(question.prompt).appendTo($(".survey"));
+                  var choices = question.extra_data.$choices;
+                  var $a = $("<div class='answers' />").appendTo($(".survey"));
+                  for(var c = 0; c < choices.length; c++) {
+                    var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a).click(answerSelected);
+                  }
                 }
-              }
           }
       }, this));
       
