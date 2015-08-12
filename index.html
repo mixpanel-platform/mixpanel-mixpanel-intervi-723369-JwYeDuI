@@ -7,6 +7,7 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
+    <div class="survey"></div>
     <script>
       var token = 'b00f0e2673d6985d403d4eaa3fea973b';
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
@@ -21,6 +22,14 @@
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
               console.log(resp_obj);
+              for(var i = 0; i < resp_obj.surveys[0].questions.length; i++) {
+                var question = resp_obj.surveys[0].questions[i];
+                var $q = $("<div />").text(question.prompt).appendTo($(".survey"));
+                var choices = question.extra_data.$choices;
+                for(var c = 0; c < choices.length; c++) {
+                  var $c = $("<span />").text(choices[c]).appendTo($(".survey"));
+                }
+              }
           }
       }, this));
     </script>
