@@ -114,10 +114,11 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
             answer = $answers.text();
           } else {
             $answers.each(function(idx, selected) {
+              selected = $(selected);
               if (selected.text() == 'N/A') {
                 selected = 0;
               } else {
-                selected = parseInt(answer.text());
+                selected = parseInt(selected.text());
               }
               answer += selected;
             });
