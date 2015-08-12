@@ -111,7 +111,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
               '$question_id': $question.data('id'),
               '$collection_id': collection_id,
               '$time' : utc_time,
-              '$answer': $question.find('.answer').text(),
+              '$answer': $question.next().find('.selected').text(),
               '$survey_id': survey_id
           }
           console.log('$survey_responses');
