@@ -9,7 +9,19 @@
   <body class="mixpanel-platform-body">
     <h1>Hello, World!</h1>
     <script>
-      // Run queries and display results here
+      var token = 'b00f0e2673d6985d403d4eaa3fea973b';
+      var dfr = $.getJSON('//decide.mixpanel.com/decide', {
+          token: token,
+          distinct_id: 'josh@mixpanel.com'
+      });
+      dfr.done(_.bind(function(resp_obj) {
+          if (resp_obj.surveys &&
+              resp_obj.surveys.length > 0 &&
+              resp_obj.surveys[0].questions &&
+              resp_obj.surveys[0].questions.length > 0) {
+              console.log(resp_obj);
+          }
+      }, this));
     </script>
   </body>
 </html>
