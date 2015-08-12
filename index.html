@@ -106,11 +106,12 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
           var $question = $(question);
            // append to profile in desired form
           var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
+          debugger;
           var response_obj = {
               '$question_id': $question.data('id'),
               '$collection_id': collection_id,
               '$time' : utc_time,
-              '$answer': $question.find('.selected').text(),
+              '$answer': $question.find('.answer').text(),
               '$survey_id': survey_id
           }
           console.log('$survey_responses');
