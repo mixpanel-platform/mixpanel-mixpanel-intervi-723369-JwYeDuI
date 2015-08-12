@@ -106,7 +106,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
           var $question = $(question);
            // append to profile in desired form
           var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
-          debugger;
+          
           var answer = 0;
           
           var $answers = $question.next().find('.selected');
@@ -134,6 +134,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
           }
           console.log('$survey_responses');
           console.log(response_obj);
+          debugger;
           mixpanel.people.append('$survey_responses', response_obj);
         })
       })
