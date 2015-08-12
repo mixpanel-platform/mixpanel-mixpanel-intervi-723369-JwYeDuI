@@ -113,7 +113,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
           if ($answers.length == 1) {
             answer = $answers.text();
           } else {
-            .each(function(idx, selected) {
+            $answers.each(function(idx, selected) {
               if (selected.text() == 'N/A') {
                 selected = 0;
               } else {
