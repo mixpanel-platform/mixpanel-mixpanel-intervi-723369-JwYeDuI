@@ -81,11 +81,15 @@
       
       var answerSelected = function(e) {
         var $c = $(e.target)
-        var selected = $c.siblings('.selected').length;
-        if (selected > 1) {
-          $c.siblings().removeClass('selected');
+        if ($c.hasClass('selected')) {
+          $c.removeClass('selected');
+        } else {
+          var selected = $c.siblings('.selected').length;
+          if (selected > 1) {
+            $c.siblings().removeClass('selected');
+          }
+          $c.addClass('selected');
         }
-        $c.addClass('selected');
       }
     </script>
   </body>
