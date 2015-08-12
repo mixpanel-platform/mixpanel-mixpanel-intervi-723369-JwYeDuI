@@ -81,7 +81,10 @@
       
       var answerSelected = function(e) {
         var $c = $(e.target)
-        $c.siblings().removeClass('selected');
+        var selected = $c.siblings('.selected').length;
+        if (selected > 1) {
+          $c.siblings().removeClass('selected');
+        }
         $c.addClass('selected');
       }
     </script>
