@@ -76,9 +76,7 @@
       
       var answerSelected = function(e) {
         var $c = $(e.target)
-        $c.siblings().each(function(choice) {
-          $(choice).removeClass('selected');
-        })
+        $c.siblings().removeClass('selected');
         $c.addClass('selected');
       }
     </script>
