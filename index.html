@@ -68,11 +68,19 @@
                 var choices = question.extra_data.$choices;
                 var $a = $("<div class='answers' />").appendTo($(".survey"));
                 for(var c = 0; c < choices.length; c++) {
-                  var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a);
+                  var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a).click(answerSelected);
                 }
               }
           }
       }, this));
+      
+      var answerSelected = function(e) {
+        var $c = $(e.target)
+        $c.parent().find('.answer_choice').each(function(choice) {
+          $(choice).removeClass('selected');
+        })
+        $c.addClass('selected');
+      }
     </script>
   </body>
 </html>
