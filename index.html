@@ -76,7 +76,7 @@
                   var choices = question.extra_data.$choices;
                   var $a = $("<div class='answers' />").appendTo($(".survey"));
                   for(var c = 0; c < choices.length; c++) {
-                    var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a).click(answerSelected);
+                    var $c = $("<span class='answer_choice' />").text(choices[c]).css({width: (840/choices.length) + "px"}).appendTo($a).click(answerSelected);
                   }
                 }
           }
