@@ -65,6 +65,7 @@
               resp_obj.surveys[0].questions.length > 0) {
                 var survey = resp_obj.surveys[0];
                 console.log(survey);
+                $(".title").text(survey.name);
                 for(var i = 0; i < survey.questions.length; i++) {
                   var question = survey.questions[i];
                   var $q = $("<div class='question' />").text(question.prompt).appendTo($(".survey"));
