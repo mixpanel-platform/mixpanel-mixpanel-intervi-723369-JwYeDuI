@@ -107,11 +107,28 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
            // append to profile in desired form
           var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
           debugger;
+          var answer = 0;
+          
+          var $answers = $question.next().find('.selected');
+          if ($answers.length == 1) {
+            answer = $answers.text();
+          } else {
+            .each(function(idx, selected) {
+              if (selected.text() == 'N/A') {
+                selected = 0;
+              } else {
+                selected = parseInt(answer.text());
+              }
+              answer += selected;
+            });
+            answer = answer / $answers.length;
+          }
+          
           var response_obj = {
               '$question_id': $question.data('id'),
               '$collection_id': collection_id,
               '$time' : utc_time,
-              '$answer': $question.next().find('.selected').text(),
+              '$answer': answer,
               '$survey_id': survey_id
           }
           console.log('$survey_responses');
