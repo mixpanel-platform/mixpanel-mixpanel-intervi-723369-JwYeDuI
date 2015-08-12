@@ -53,9 +53,13 @@
   <body class="mixpanel-platform-body">
     <div class="survey">
       <h1 class="title"></h1>
+      <button id="save">Submit</button>
     </div>
     <script>
+      var collection_id = 0;
+      var survey_id = 0;
       var token = 'b00f0e2673d6985d403d4eaa3fea973b';
+      mixpanel.initialize(token, {}, 'interviews');
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
           version: 1,
           token: token,
@@ -68,19 +72,45 @@
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
                 var survey = resp_obj.surveys[0];
+                survey_id = survey.id;
                 console.log(survey);
+                collection_id = survey.collections[0].id;
                 $(".title").text(survey.name);
                 for(var i = 0; i < survey.questions.length; i++) {
                   var question = survey.questions[i];
-                  var $q = $("<div class='question' />").text(question.prompt).appendTo($(".survey"));
+                  var $q = $("<div class='question' />")
+                    .text(question.prompt)
+                    .data('id', question.id)
+                    .appendTo($(".survey"));
                   var choices = question.extra_data.$choices;
                   var $a = $("<div class='answers' />").appendTo($(".survey"));
                   for(var c = 0; c < choices.length; c++) {
-                    var $c = $("<span class='answer_choice' />").text(choices[c]).css({width: (840/choices.length) + "px"}).appendTo($a).click(answerSelected);
+                    var $c = $("<span class='answer_choice' />")
+                      .text(choices[c])
+                      .css({width: (840/choices.length) + "px"})
+                      .appendTo($a)
+                      .click(answerSelected);
                   }
                 }
           }
       }, this));
+      
+      $('.save').click(function() {
+        $('.question').each(function($question) {
+           // append to profile in desired form
+          var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
+          var response_obj = {
+              '$question_id': $question.data('id'),
+              '$collection_id': collection_id,
+              '$time' : utc_time,
+              '$answer': $question.find('.selected').val(),
+              '$survey_id': this.survey.id
+          }
+          console.log('$survey_responses');
+          console.log(response_obj);
+          // mixpanel.interviews.people.append('$survey_responses', response_obj);
+        })
+      })
       
       var answerSelected = function(e) {
         var $c = $(e.target)
