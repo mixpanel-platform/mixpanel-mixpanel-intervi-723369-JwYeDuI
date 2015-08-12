@@ -7,10 +7,10 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
     <script>
       var token = 'b00f0e2673d6985d403d4eaa3fea973b';
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
+          version: 2,
           token: token,
           distinct_id: 'josh@mixpanel.com'
       });
