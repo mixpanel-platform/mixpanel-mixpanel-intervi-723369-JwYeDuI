@@ -6,6 +6,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
+  <style type="text/css">
+    .survey {
+      background-color: #fff;
+    }
+    
+    .question {
+      font-size: 12px;
+    }
+    
+    .answers {
+      border: 2px solid black;
+    }
+    
+    .answer_choice {
+      display: inline-block;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 20%;
+      overflow: hidden;
+      border-right: 2px solid black;
+    }
+    
+  </style>
   <body class="mixpanel-platform-body">
     <div class="survey"></div>
     <script>
@@ -21,13 +44,13 @@
               resp_obj.surveys.length > 0 &&
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
-              console.log(resp_obj);
               for(var i = 0; i < resp_obj.surveys[0].questions.length; i++) {
                 var question = resp_obj.surveys[0].questions[i];
-                var $q = $("<div />").text(question.prompt).appendTo($(".survey"));
+                var $q = $("<div class='question' />").text(question.prompt).appendTo($(".survey"));
                 var choices = question.extra_data.$choices;
+                var $a = $("<div class='answers' />").appendTo($(".survey"));
                 for(var c = 0; c < choices.length; c++) {
-                  var $c = $("<span />").text(choices[c]).appendTo($(".survey"));
+                  var $c = $("<span class='answer_choice' />").text(choices[c]).appendTo($a);
                 }
               }
           }
