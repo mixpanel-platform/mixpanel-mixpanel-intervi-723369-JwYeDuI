@@ -19,6 +19,7 @@
     }
     
     .answers {
+      display: table-row;
     }
     
     .answer_choice:first-child {
@@ -44,6 +45,8 @@
       overflow: hidden;
       border-right: 2px solid black;
       text-align: center;
+      display: table-cell;
+      vertical-align: middle;
     }
     
   </style>
@@ -85,7 +88,6 @@
           $c.removeClass('selected');
         } else {
           var selected = $c.siblings('.selected').length;
-          
           if ((selected == 1 && !$c.next().hasClass('selected') && !$c.prev().hasClass('selected')) || selected > 1) {
             $c.siblings().removeClass('selected');
           }
