@@ -102,7 +102,8 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
       }, this));
       
       $('.save').click(function() {
-        $('.question').each(function($question) {
+        $('.question').each(function(idx, question) {
+          var $question = $(question);
            // append to profile in desired form
           var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
           var response_obj = {
