@@ -92,6 +92,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
                 survey_id = survey.id;
                 console.log(survey);
                 collection_id = survey.collections[0].id;
+                mixpanel.people.append('$surveys', survey_id))
                 $(".title").text(survey.name + " for John Doe (iOS Engineer)");
                 for(var i = 0; i < survey.questions.length; i++) {
                   var question = survey.questions[i];
@@ -149,7 +150,8 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
         console.log('$answers');
         console.log(response_obj);
         mixpanel.people.append('$answers', response_obj);
-      })
+      });
+      mixpanel.people.append('$responses', collection_id))
     })
     
     var answerSelected = function(e) {
