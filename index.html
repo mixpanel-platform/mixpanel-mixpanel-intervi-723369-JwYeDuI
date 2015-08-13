@@ -57,17 +57,25 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
     
   </style>
   <body class="mixpanel-platform-body">
+    <div>Type your e-mail address: <input type="text" class="email" /><button class="login">Login</button></div>
     <div class="survey">
       <h1 class="title"></h1>
     </div>
     
     <button class="save">Submit</button>
     <script>
-      var collection_id = 0;
-      var survey_id = 0;
-      var distinct_id = 'josh@mixpanel.com'
-      var token = 'b00f0e2673d6985d403d4eaa3fea973b';
+    var collection_id = 0;
+    var survey_id = 0;
+    var distinct_id = ''
+    
+    $('.login').click(function() {
+      distinct_id = $('.email').val();
       mixpanel.identify(distinct_id);
+      getSurveys();
+    });
+    
+    var getSurveys = function() { 
+      var token = 'b00f0e2673d6985d403d4eaa3fea973b';
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
           version: 1,
           token: token,
@@ -102,56 +110,57 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
                 }
           }
       }, this));
+    }
       
-      $('.save').click(function() {
-        $('.question').each(function(idx, question) {
-          var $question = $(question);
-           // append to profile in desired form
-          var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
-          
-          var answer = 0;
-          
-          var $answers = $question.next().find('.selected');
-          if ($answers.length == 1) {
-            answer = $answers.text();
-          } else {
-            $answers.each(function(idx, selected) {
-              selected = $(selected);
-              if (selected.text() == 'N/A') {
-                selected = 0;
-              } else {
-                selected = parseInt(selected.text());
-              }
-              answer += selected;
-            });
-            answer = answer / $answers.length;
-          }
-          
-          var response_obj = {
-              '$question_id': $question.data('id'),
-              '$collection_id': collection_id,
-              '$time' : utc_time,
-              '$value': answer,
-              '$survey_id': survey_id
-          }
-          console.log('$answers');
-          console.log(response_obj);
-          mixpanel.people.append('$answers', response_obj);
-        })
-      })
-      
-      var answerSelected = function(e) {
-        var $c = $(e.target)
-        if ($c.hasClass('selected')) {
-          $c.removeClass('selected');
+    $('.save').click(function() {
+      $('.question').each(function(idx, question) {
+        var $question = $(question);
+         // append to profile in desired form
+        var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
+        
+        var answer = 0;
+        
+        var $answers = $question.next().find('.selected');
+        if ($answers.length == 1) {
+          answer = $answers.text();
         } else {
-          var selected = $c.siblings('.selected').length;
-          // if ((selected == 1 && !$c.next().hasClass('selected') && !$c.prev().hasClass('selected')) || selected > 1) {
-            $c.siblings().removeClass('selected');
-          // }
-          $c.addClass('selected');
+          $answers.each(function(idx, selected) {
+            selected = $(selected);
+            if (selected.text() == 'N/A') {
+              selected = 0;
+            } else {
+              selected = parseInt(selected.text());
+            }
+            answer += selected;
+          });
+          answer = answer / $answers.length;
         }
+        
+        var response_obj = {
+            '$question_id': $question.data('id'),
+            '$collection_id': collection_id,
+            '$time' : utc_time,
+            '$value': answer,
+            '$survey_id': survey_id
+        }
+        console.log('$answers');
+        console.log(response_obj);
+        mixpanel.people.append('$answers', response_obj);
+      })
+    })
+    
+    var answerSelected = function(e) {
+      var $c = $(e.target)
+      if ($c.hasClass('selected')) {
+        $c.removeClass('selected');
+      } else {
+        var selected = $c.siblings('.selected').length;
+        // if ((selected == 1 && !$c.next().hasClass('selected') && !$c.prev().hasClass('selected')) || selected > 1) {
+          $c.siblings().removeClass('selected');
+        // }
+        $c.addClass('selected');
       }
+    }
       
     </script>
   </body>
