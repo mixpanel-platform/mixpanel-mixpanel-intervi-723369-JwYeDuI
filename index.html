@@ -146,9 +146,9 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
           $c.removeClass('selected');
         } else {
           var selected = $c.siblings('.selected').length;
-          if ((selected == 1 && !$c.next().hasClass('selected') && !$c.prev().hasClass('selected')) || selected > 1) {
+          // if ((selected == 1 && !$c.next().hasClass('selected') && !$c.prev().hasClass('selected')) || selected > 1) {
             $c.siblings().removeClass('selected');
-          }
+          // }
           $c.addClass('selected');
         }
       }
