@@ -115,53 +115,52 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
                   }
                 }
             $('<button class="save">Save</button>').appendTo($('.survey'));
+            $('.save').click(function() {
+              $('.question').each(function(idx, question) {
+                var $question = $(question);
+                 // append to profile in desired form
+                var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
+                
+                var answer = 0;
+                
+                var $answers = $question.next().find('.selected');
+                if ($answers.length == 1) {
+                  answer = $answers.text();
+                } else {
+                  $answers.each(function(idx, selected) {
+                    selected = $(selected);
+                    if (selected.text() == 'N/A') {
+                      selected = 0;
+                    } else {
+                      selected = parseInt(selected.text());
+                    }
+                    answer += selected;
+                  });
+                  answer = answer / $answers.length;
+                }
+                
+                var response_obj = {
+                    '$question_id': $question.data('id'),
+                    '$collection_id': collection_id,
+                    '$time' : utc_time,
+                    '$value': answer,
+                    '$survey_id': survey_id
+                }
+                console.log('$answers');
+                console.log(response_obj);
+                mixpanel.people.append('$answers', response_obj);
+              });
+              mixpanel.people.append('$responses', collection_id);
+              
+              $('.survey').html('loading...');
+              setTimeout(getSurveys, 5000);
+            });
           } else {
             $('<div>No pending rubrics for you.</div>').appendTo('.survey');
           }
       }, this));
     }
       
-    $('.save').click(function() {
-      $('.question').each(function(idx, question) {
-        var $question = $(question);
-         // append to profile in desired form
-        var utc_time = (new Date()).toISOString().substring(0, 19);  // e.g. 2013-08-27T01:38:35 in UTC time
-        
-        var answer = 0;
-        
-        var $answers = $question.next().find('.selected');
-        if ($answers.length == 1) {
-          answer = $answers.text();
-        } else {
-          $answers.each(function(idx, selected) {
-            selected = $(selected);
-            if (selected.text() == 'N/A') {
-              selected = 0;
-            } else {
-              selected = parseInt(selected.text());
-            }
-            answer += selected;
-          });
-          answer = answer / $answers.length;
-        }
-        
-        var response_obj = {
-            '$question_id': $question.data('id'),
-            '$collection_id': collection_id,
-            '$time' : utc_time,
-            '$value': answer,
-            '$survey_id': survey_id
-        }
-        console.log('$answers');
-        console.log(response_obj);
-        mixpanel.people.append('$answers', response_obj);
-      });
-      mixpanel.people.append('$responses', collection_id);
-      
-      $('.survey').html('loading...');
-      setTimeout(getSurveys, 5000);
-    })
-    
     var answerSelected = function(e) {
       var $c = $(e.target)
       if ($c.hasClass('selected')) {
