@@ -86,7 +86,6 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
               resp_obj.surveys.length > 0 &&
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
-                $('<button class="save"></button>').appendTo($('.survey'));
                 var survey = resp_obj.surveys[0];
                 survey_id = survey.id;
                 console.log(survey);
@@ -109,6 +108,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
                       .click(answerSelected);
                   }
                 }
+            $('<button class="save">Save</button>').appendTo($('.survey'));
           } else {
             $('<div>No pending rubrics for you.</div>').appendTo('.survey');
           }
