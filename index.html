@@ -65,11 +65,13 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
     <script>
       var collection_id = 0;
       var survey_id = 0;
+      var distinct_id = 'josh@mixpanel.com'
       var token = 'b00f0e2673d6985d403d4eaa3fea973b';
+      mixpanel.identify(distinct_id);
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
           version: 1,
           token: token,
-          distinct_id: 'josh@mixpanel.com',
+          distinct_id: distinct_id,
           lib: 'iphone'
       });
       dfr.done(_.bind(function(resp_obj) {
@@ -152,7 +154,6 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
         }
       }
       
-      mixpanel.track('test');
     </script>
   </body>
 </html>
