@@ -62,7 +62,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
       <h1 class="title"></h1>
     </div>
     
-    <button class="save">Submit</button>
+    <button class="save" style="display:none;">Submit</button>
     <script>
     var collection_id = 0;
     var survey_id = 0;
@@ -87,11 +87,12 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
               resp_obj.surveys.length > 0 &&
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
+                $('.save').show();
                 var survey = resp_obj.surveys[0];
                 survey_id = survey.id;
                 console.log(survey);
                 collection_id = survey.collections[0].id;
-                $(".title").text(survey.name);
+                $(".title").text(survey.name + " for John Doe (iOS Engineer)");
                 for(var i = 0; i < survey.questions.length; i++) {
                   var question = survey.questions[i];
                   var $q = $("<div class='question' />")
@@ -108,6 +109,8 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
                       .click(answerSelected);
                   }
                 }
+          } else {
+            $('<div>No pending rubrics for you.</div>').appendTo('.survey');
           }
       }, this));
     }
