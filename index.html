@@ -59,11 +59,10 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
   <body class="mixpanel-platform-body">
     <div>Type your e-mail address: <input type="text" class="email" /><button class="login">Login</button></div>
     <div class="survey">
-      <h1 class="title"></h1>
     </div>
-    
-    <button class="save" style="display:none;">Submit</button>
     <script>
+    
+    var token = 'b00f0e2673d6985d403d4eaa3fea973b';
     var collection_id = 0;
     var survey_id = 0;
     var distinct_id = ''
@@ -75,7 +74,7 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
     });
     
     var getSurveys = function() { 
-      var token = 'b00f0e2673d6985d403d4eaa3fea973b';
+      $('.answers').html('');
       var dfr = $.getJSON('//decide.mixpanel.com/decide', {
           version: 1,
           token: token,
@@ -87,13 +86,13 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
               resp_obj.surveys.length > 0 &&
               resp_obj.surveys[0].questions &&
               resp_obj.surveys[0].questions.length > 0) {
-                $('.save').show();
+                $('<button class="save"></button>').appendTo($('.survey'));
                 var survey = resp_obj.surveys[0];
                 survey_id = survey.id;
                 console.log(survey);
                 collection_id = survey.collections[0].id;
                 mixpanel.people.append('$surveys', survey_id)
-                $(".title").text(survey.name + " for John Doe (iOS Engineer)");
+                $("<h1 class='title'></div>").text(survey.name + " for John Doe (iOS Engineer)").appendTo($('.survey'));
                 for(var i = 0; i < survey.questions.length; i++) {
                   var question = survey.questions[i];
                   var $q = $("<div class='question' />")
@@ -153,7 +152,8 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
       });
       mixpanel.people.append('$responses', collection_id);
       
-      getSurveys();
+      $('.survey').html('loading...');
+      setTimeout(getSurveys, 5000);
     })
     
     var answerSelected = function(e) {
