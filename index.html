@@ -134,10 +134,9 @@ mixpanel.init("b00f0e2673d6985d403d4eaa3fea973b");</script><!-- end Mixpanel -->
               '$answer': answer,
               '$survey_id': survey_id
           }
-          console.log('$survey_responses');
+          console.log('$answers');
           console.log(response_obj);
-          debugger;
-          mixpanel.people.append('$survey_responses', response_obj);
+          mixpanel.people.append('$answers', response_obj);
         })
       })
       
